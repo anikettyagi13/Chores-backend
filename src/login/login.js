@@ -10,7 +10,7 @@ const login = async(email,password,res)=>{
             name:'',
             id:"2e86d4ac-39de-440f-aec5-4f55b556d5abn",
             token:'',
-            error:'No user with this credentials found.'
+            error:'No user with these credentials found.'
         })
 
     }else{
