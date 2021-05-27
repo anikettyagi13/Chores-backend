@@ -90,8 +90,23 @@ const getIfLiked = async (req, res) => {
   }
 };
 
+const getSearchPost = async (req, res) => {
+  try {
+    var posts = await pool.query(
+      "SELECT * from posts WHERE (tag1=$1 OR tag2=$1 OR tag3=$1 OR tag4=$1 OR tag5=$1) AND (time>$2 OR time<$3) ORDER BY time DESC limit 9",
+      [req.params.search, req.body.upperLimit, req.body.lowerLimit]
+    );
+    console.log(posts.rows);
+    res.json(posts.rows);
+  } catch (e) {
+    console.log(e);
+    throw new Error("server error");
+  }
+};
+
 module.exports = {
   addPost,
   getGlobal,
   getIfLiked,
+  getSearchPost,
 };

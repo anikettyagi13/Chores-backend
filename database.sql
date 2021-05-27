@@ -91,14 +91,14 @@ CREATE TABLE notification(
   element text
 );
 
-UPDATE posts SET likes=likes+1 
-WHERE post_id=$1
+-- UPDATE posts SET likes=likes+1 
+-- WHERE post_id=$1
 
-ALTER TABLE users
-DROP COLUMN usename;
+-- ALTER TABLE users
+-- DROP COLUMN usename;
 
-ALTER TABLE userInfo
-Add COLUMN bio text;
+-- ALTER TABLE userInfo
+-- Add COLUMN bio text;
 
-ALTER TABLE users
-ADD COLUMN usename text;
+-- ALTER TABLE users
+-- ADD COLUMN usename text;

@@ -34,22 +34,17 @@ const {
   notifications,
   getCounts,
 } = require("./src/utils/notification.js");
-const { addPost, getGlobal, getIfLiked } = require("./src/utils/post");
+const {
+  addPost,
+  getGlobal,
+  getIfLiked,
+  getSearchPost,
+} = require("./src/utils/post");
 
 const app = express();
 
 app.use(bodyParser.urlencoded({ extended: true, limit: "50mb" }));
 app.use(bodyParser.json({ limit: "50mb" }));
-
-app.get("/users", async (req, res) => {
-  const users = await pool.query("SELECT * FROM users");
-  res.json({ users: users.rows });
-});
-
-app.post("/delete-user", async (req, res) => {
-  const user = await pool.query(req.body.query);
-  res.json({ user });
-});
 
 app.post("/register", async (req, res) => {
   const { id, name, email, password } = req.body;
@@ -175,7 +170,7 @@ app.get("/getAnswersOfUser/:id/:user", isLoggedIn, async (req, res) => {
 
 app.post("/getPosts", isLoggedIn, async (req, res) => {
   if (req.body.error) {
-    // TODO fmkas ##########################################################################################
+    res.sendStatus(401);
   } else {
     var posts = await pool.query(
       "SELECT * from posts WHERE (pincode=$1 OR pincode=$2 OR pincode=$3) AND (time>$4 OR time<$5) ORDER BY time DESC limit 9",
@@ -222,6 +217,15 @@ app.get("/basicUserInfo/:id", async (req, res) => {
     await basicUserInfo(req, res);
   } catch (e) {
     res.sendStatus(500);
+  }
+});
+
+app.post("/getSearchPosts/:search", async (req, res) => {
+  try {
+    console.log("Adsdasd");
+    await getSearchPost(req, res);
+  } catch (e) {
+    req.sendStatus(500);
   }
 });
 
